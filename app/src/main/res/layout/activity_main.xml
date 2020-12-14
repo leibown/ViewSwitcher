@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delete"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.leibown.library.ViewSwitcher
+        android:id="@+id/viewSwitcher"
+        app:showIndex="20"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="#11aacc"
+            android:text="tv1" />
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="#11ccaa"
+            android:text="tv2" />
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#11ddcc"
+            android:text="tv3" />
+
+        <TextView
+            android:id="@+id/tv_4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#aaddcc"
+            android:text="tv4" />
+
+    </com.leibown.library.ViewSwitcher>
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/llContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
