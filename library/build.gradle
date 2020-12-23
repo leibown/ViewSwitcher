@@ -1,4 +1,10 @@
 apply plugin: 'com.android.library'
+//启用Jitpack 插件
+apply plugin: 'com.github.dcendents.android-maven'
+
+//设置Jitpack发布的Group
+//我的github账号是Leibown, 对应我的group就是com.github.Leibown
+group='com.github.Leibown'
 
 android {
     compileSdkVersion 30
