@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-//        RecyclerView
+//        RecyclerView.LayoutManager
 
 
         switcherHelper.addView(ChildViewFactory.create(this, R.layout.layout_123, null));
