@@ -349,6 +349,14 @@ public class SwitcherHelper implements ChildOperate {
         }
     }
 
+    public int getCurrentIndex() {
+        return indexOf(currentChildView);
+    }
+
+    public ChildView getCurrentChildView() {
+        return currentChildView;
+    }
+
     @Override
     public void hide(int id) {
         hide(getView(id));
