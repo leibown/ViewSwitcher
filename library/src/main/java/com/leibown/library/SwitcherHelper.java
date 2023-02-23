@@ -3,6 +3,7 @@ package com.leibown.library;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import androidx.annotation.LayoutRes;
 import androidx.fragment.app.Fragment;
@@ -54,7 +55,6 @@ public class SwitcherHelper implements ChildOperate {
     public void setOnChangedListener(OnChangedListener onChangedListener) {
         this.onChangedListener = onChangedListener;
     }
-
 
     @Override
     public ChildView addView(View view) {
@@ -339,8 +339,27 @@ public class SwitcherHelper implements ChildOperate {
             onChangedListener.onHide(childViews.indexOf(currentChildView), currentChildView);
         }
         if (currentChildView != null) {
-            currentChildView.hide();
+            Animation showAnimation = childView.getShowAnimation();
+            if (showAnimation != null) {
+                currentChildView.getView().setZ(-1);
+                childView.getView().setZ(100);
+                final ChildView oldChildView = currentChildView;
+                currentChildView.getView().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        oldChildView.hide();
+                    }
+                }, showAnimation.getDuration());
+            } else {
+                currentChildView.hide();
+            }
+            Animation hideAnimation = currentChildView.getHideAnimation();
+            if (hideAnimation != null) {
+                currentChildView.getView().setZ(100);
+                childView.getView().setZ(-1);
+            }
         }
+
         currentChildView = childView;
         currentChildView.show();
 

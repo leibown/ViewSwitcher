@@ -2,6 +2,8 @@ package com.leibown.library;
 
 import android.content.Context;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,9 @@ public class ChildView {
     protected int id;
 
     private boolean isCreateView;
+
+    private int transAnimator = PageTransAnimator.DEFAULT;
+
 
     public ChildView(Context context, View view) {
         this(context, view, null);
@@ -59,11 +64,14 @@ public class ChildView {
         return tempView;
     }
 
+    public void setTransAnimator(int transAnimator) {
+        this.transAnimator = transAnimator;
+    }
+
     /**
      * 当ChildView初始化类型为DELAY_INIT， 此时ChildView内部view并没有创建，所以此时为空，
      * 这里用一个空view来占容器中的位置
      */
-
     public void createEmptyView() {
         mView = new View(mContext);
     }
@@ -112,16 +120,48 @@ public class ChildView {
     public void show() {
         if (mView != null) {
             mView.setVisibility(View.VISIBLE);
+            Animation showAnimation = getShowAnimation();
+            if (showAnimation != null) {
+                mView.startAnimation(showAnimation);
+            }
         }
     }
 
 
     public void hide() {
         if (mView != null) {
-            mView.setVisibility(View.GONE);
+            Animation hideAnimation = getHideAnimation();
+            if (hideAnimation != null) {
+                mView.startAnimation(hideAnimation);
+                mView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.setVisibility(View.GONE);
+                    }
+                }, hideAnimation.getDuration());
+            } else {
+                mView.setVisibility(View.GONE);
+            }
         }
     }
 
+    public Animation getShowAnimation() {
+        if (transAnimator == PageTransAnimator.DEFAULT) {
+            return null;
+        }
+        // if (transAnimator==PageTransAnimator.DEFAULT){
+        // }
+        return AnimationUtils.loadAnimation(getView().getContext(), R.anim.slide_in_top);
+    }
+
+    public Animation getHideAnimation() {
+        if (transAnimator == PageTransAnimator.DEFAULT) {
+            return null;
+        }
+        // if (transAnimator==PageTransAnimator.DEFAULT){
+        // }
+        return AnimationUtils.loadAnimation(getView().getContext(), R.anim.slide_out_top);
+    }
 
     public ChildViewInitType getChildViewInitType() {
         return mChildViewInitType;

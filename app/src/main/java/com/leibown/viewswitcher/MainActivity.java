@@ -14,6 +14,7 @@ import com.leibown.library.ChildViewFactory;
 import com.leibown.library.ChildViewInitType;
 import com.leibown.library.DisplayUtil;
 import com.leibown.library.OnChangedListener;
+import com.leibown.library.PageTransAnimator;
 import com.leibown.library.SwitcherHelper;
 import com.leibown.library.ViewSwitcher;
 
@@ -28,18 +29,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SecondFragment secondFragment = new SecondFragment();
+        ListFragment listFragment = new ListFragment();
 
         ViewSwitcher viewSwitcher = findViewById(R.id.viewSwitcher);
         final SwitcherHelper switcherHelper = viewSwitcher.getSwitcherHelper();
         switcherHelper.show(R.id.tv_1);
+        switcherHelper.addView(listFragment, getSupportFragmentManager());
+        switcherHelper.addView(secondFragment, getSupportFragmentManager());
         for (int i = 4; i < 24; i++) {
             BlankFragment fragment = BlankFragment.getInstance("我是第" + i + "个", colors[i % 24]);
+            ChildView childView;
             if (i < 10) {
-                switcherHelper.addView(fragment, getSupportFragmentManager());
+                childView = switcherHelper.addView(fragment, getSupportFragmentManager());
             } else {
-                switcherHelper.addView(fragment, getSupportFragmentManager(), ChildViewInitType.DELAY_INIT);
+                childView = switcherHelper.addView(fragment, getSupportFragmentManager(), ChildViewInitType.DELAY_INIT);
             }
-
+            childView.setTransAnimator(PageTransAnimator.TOP_BOTTOM);
         }
 
 //        RecyclerView.LayoutManager
@@ -97,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         count = switcherHelper.getChildCount() - 1;
-
     }
 
 
